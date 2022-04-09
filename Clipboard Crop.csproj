@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <IsPublishable>True</IsPublishable>
+    <DebugType>none</DebugType>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", ""))</RootNamespace>
+    <ApplicationIcon>images\icon.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <Authors>Brandon Fowler</Authors>
+    <Copyright>Copyright 2022 Brandon Fowler</Copyright>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <BaseOutputPath>bin\</BaseOutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="images\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\flip horizontally.png" />
+    <Resource Include="images\flip vertically.png" />
+    <Resource Include="images\icon.ico" />
+    <Resource Include="images\icon.png" />
+    <Resource Include="images\load clipboard.png" />
+    <Resource Include="images\load file.png" />
+    <Resource Include="images\rotate left.png" />
+    <Resource Include="images\rotate right.png" />
+    <Resource Include="images\save clipboard.png" />
+    <Resource Include="images\save file.png" />
+  </ItemGroup>
+  <Target Name="PostPublish" AfterTargets="Publish">
+    <Exec Command="makensis NSIS.nsi" />
+  </Target>
+</Project>

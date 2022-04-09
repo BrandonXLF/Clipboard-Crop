@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" stroke-width="1.5" stroke="#00a8f3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+	<mask id="scissors" stroke="black">
+		<rect x="-100%" y="-100%" width="300%" height="300" fill="white" />
+		<rect x="5" y="1" width="6" height="4" rx="2" fill="black" stroke-width="0" />
+		<circle cx="4.5" cy="8" r="2" />
+		<circle cx="11.5" cy="8" r="2" />
+		<line x1="3" y1="17" x2="10.5" y2="10" />
+		<line x1="5.5" y1="10" x2="13" y2="17" />
+	</mask>
+	<path d="M5 3h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" fill="#00a8f3" mask="url(#scissors)"/>
+	<rect x="5" y="1" width="6" height="4" rx="2" />
+</svg>
