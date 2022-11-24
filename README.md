@@ -6,7 +6,7 @@
 ## Main Features
 * Loading an image from a file
 * Cropping, rotating, and flipping the image
-* Saving the image to the clipboard to a file
+* Saving the image to the clipboard or a file
 
 ## Image
 [<img src="images/demo.png" width="500">](images/demo.png)
