@@ -1,3 +1,4 @@
+![Farmer in a field next to crops with a clipboard](images/farmer.jpg)
 # Clipboard Crop
 
 **Clipboard Crop** is a Windows application written with .NET that allows you to easily crop images in your clipboard and to save them back to your clipboard.
