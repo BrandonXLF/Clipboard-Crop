@@ -12,4 +12,4 @@
 [<img src="images/demo.png" width="500">](images/demo.png)
 
 ## Building
-Clipboard Crop can be built using Visual Studio with .NET as well as NSIS. To produce a publishable version of the app, publish the main project in Visual Studio. Note this will automatically run `makensis NSIS.nsi` to create the installer.
+Clipboard Crop is built using Visual Studio with .NET as well as NSIS. To produce a publishable version of the app, publish the main project in Visual Studio. Note this will automatically run `makensis NSIS.nsi` to create the installer.
