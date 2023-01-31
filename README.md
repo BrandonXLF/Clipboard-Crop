@@ -4,7 +4,7 @@
 **Clipboard Crop** is a Windows application written with .NET that allows you to easily crop images in your clipboard and to save them back to your clipboard.
 
 ## Main Features
-* Loading an image from a file
+* Loading an image from the clipboard or a file
 * Cropping, rotating, and flipping the image
 * Saving the image to the clipboard or a file
 
