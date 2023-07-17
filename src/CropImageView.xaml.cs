@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -217,14 +217,11 @@ namespace ClipboardCrop {
             PreviewImage = Image;
 
             if (Contrast != 1 || Brightness != 0 || Saturation != 1) {
-                FormatConvertedBitmap converted = new();
-                converted.BeginInit();
-                converted.Source = PreviewImage;
-                converted.DestinationFormat = PixelFormats.Bgra32;
-                converted.EndInit();
+                FormatConvertedBitmap converted = new(PreviewImage, PixelFormats.Bgra32, null, 0);
+                int stride = converted.PixelWidth * 4;
 
-                byte[] bytes = new byte[converted.PixelHeight * converted.PixelWidth * 4];
-                converted.CopyPixels(bytes, converted.PixelWidth * 4, 0);
+                byte[] bytes = new byte[stride * converted.PixelHeight];
+                converted.CopyPixels(bytes, stride, 0);
 
                 for (int i = 0; i < bytes.Length; i += 4) {
                     float grey = (bytes[i] + bytes[i + 1] + bytes[i + 2]) / 3;
@@ -244,7 +241,7 @@ namespace ClipboardCrop {
                     converted.Format,
                     null,
                     bytes,
-                    converted.PixelWidth * 4
+                    stride
                 );
             }
 
