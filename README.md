@@ -8,7 +8,7 @@
 
 * Loading an image from the clipboard or a file
 * Cropping, rotating, and flipping the image
-* Changing the brighness, contrast, and saturation
+* Changing the brightness, contrast, and saturation
 * Saving the image to the clipboard or a file
 
 ## Image
