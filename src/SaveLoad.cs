@@ -61,7 +61,7 @@ namespace ClipboardCrop
         public static BitmapSource? LoadFile() {
             OpenFileDialog dialog = new() {
                 Filter = "Image Files (*.png;*.jpg;*.jpeg;*.jpe;*.jfif;*.bmp;*.gif;*.tiff;*.tif)|*.png;*.jpg;*.jpeg;*.jpe;*.jfif;*.bmp;*.gif;*.tiff;*.tif",
-                RestoreDirectory = true,
+                RestoreDirectory = true
             };
 
             if (dialog.ShowDialog() != true) throw new OperationCanceledException();
@@ -71,7 +71,14 @@ namespace ClipboardCrop
 
         public static BitmapSource? LoadFile(string path) {
             try {
-                return new BitmapImage(new Uri(path));
+                BitmapImage bitmapImage = new();
+
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(path);
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+
+                return bitmapImage;
             } catch {
                 MessageBox.Show("Unable to load image from selected file", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
