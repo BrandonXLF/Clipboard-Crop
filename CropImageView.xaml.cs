@@ -230,15 +230,9 @@ namespace ClipboardCrop {
                     float grey = (bytes[i] + bytes[i + 1] + bytes[i + 2]) / 3;
 
                     for (int j = 0; j < 3; j++) {
-                        float value = ((bytes[i + j] - 128) * Contrast + 128 + Brightness) * Saturation + grey * (1 - Saturation);
+                        float value = (bytes[i + j] * Saturation + grey * (1 - Saturation) - 128) * Contrast + 128 + Brightness;
 
-                        if (value < 0) {
-                            value = 0;
-                        } else if (value > 255) {
-                            value = 255;
-                        }
-
-                        bytes[i + j] = (byte)value;
+                        bytes[i + j] = (byte)Math.Clamp(value, 0, 255);
                     }
                 }
 
