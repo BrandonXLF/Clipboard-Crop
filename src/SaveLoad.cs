@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -86,11 +87,21 @@ namespace ClipboardCrop
         }
 
         public static BitmapSource? LoadClipboard() {
+            BitmapSource? pastedImage = null;
+
             try {
-                return Clipboard.GetImage();
-            } catch {
-                return null;
-            }
+                pastedImage = Clipboard.GetImage();
+            } catch { }
+
+            if (pastedImage != null)
+                return pastedImage;
+
+            string? file = Clipboard.GetFileDropList()?.OfType<string>().FirstOrDefault();
+            
+            if (file != null)
+                return LoadFile(file);
+
+            return null;
         }
     }
 }

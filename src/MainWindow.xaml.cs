@@ -22,14 +22,7 @@ namespace ClipboardCrop {
         }
 
         private void OnPaste(object sender, ExecutedRoutedEventArgs e) {
-            BitmapSource? pastedImage = SaveLoad.LoadClipboard();
-
-            if (pastedImage == null) {
-                string? file = Clipboard.GetFileDropList()?.OfType<string>().FirstOrDefault();
-                if (file != null) pastedImage = SaveLoad.LoadFile(file);
-            }
-
-            Image = pastedImage;
+            Image = SaveLoad.LoadClipboard();
         }
 
         private void Window_DragOver(object sender, DragEventArgs e) {
