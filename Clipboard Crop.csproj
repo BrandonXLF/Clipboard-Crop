@@ -22,14 +22,18 @@
     <None Remove="images\icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="images\brightness.png" />
+    <Resource Include="images\contrast.png" />
     <Resource Include="images\flip horizontally.png" />
     <Resource Include="images\flip vertically.png" />
     <Resource Include="images\icon.ico" />
     <Resource Include="images\icon.png" />
     <Resource Include="images\load clipboard.png" />
     <Resource Include="images\load file.png" />
+    <Resource Include="images\reset.png" />
     <Resource Include="images\rotate left.png" />
     <Resource Include="images\rotate right.png" />
+    <Resource Include="images\saturation.png" />
     <Resource Include="images\save clipboard.png" />
     <Resource Include="images\save file.png" />
   </ItemGroup>

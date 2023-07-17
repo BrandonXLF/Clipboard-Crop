@@ -1,0 +1,110 @@
+﻿<UserControl
+    x:Class="ClipboardCrop.PopupSlider"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ClipboardCrop"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
+    <UserControl.Resources>
+        <local:InverseConverter x:Key="inverseConverter" />
+        <local:EqualityConverter x:Key="equalityConverter" />
+        <local:FractionConverter x:Key="fractionConverter" />
+        <sys:Double x:Key="smallChangeDivisor">100</sys:Double>
+        <sys:Double x:Key="largeChangeDivisor">20</sys:Double>
+        <Style TargetType="{x:Type local:PopupSlider}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:PopupSlider}">
+                        <Grid>
+                            <ToggleButton
+                                Name="toggle"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ToolTip="{TemplateBinding ToolTip}"
+                                Padding="5"
+                            >
+                                <ContentPresenter />
+                            </ToggleButton>
+                            <Popup
+                                PlacementTarget="{Binding ElementName=toggle}"
+                                Placement="Center"
+                                VerticalOffset="{Binding ActualHeight, ElementName=toggle, Converter={StaticResource inverseConverter}}"
+                                IsOpen="{Binding IsChecked, ElementName=toggle, Mode=TwoWay}"
+                                StaysOpen="False"
+                                AllowsTransparency="True"
+                            >
+                                <Border
+                                    BorderThickness="1"
+                                    BorderBrush="DarkGray"
+                                    Background="White"
+                                    Padding="5"
+                                    CornerRadius="4"
+                                >
+                                    <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Width="22" />
+                                        <Slider
+                                            Grid.Column="1"
+                                            Width="150"
+                                            Value="{Binding Value}"
+                                            Maximum="{TemplateBinding Maximum}"
+                                            Minimum="{TemplateBinding Minimum}"
+                                        >
+                                            <Slider.SmallChange>
+                                                <MultiBinding
+                                                    Converter="{StaticResource fractionConverter}"
+                                                    ConverterParameter="{StaticResource smallChangeDivisor}"
+                                                >
+                                                    <Binding Path="Maximum" />
+                                                    <Binding Path="Minimum" />
+                                                </MultiBinding>
+                                            </Slider.SmallChange>
+                                            <Slider.LargeChange>
+                                                <MultiBinding
+                                                    Converter="{StaticResource fractionConverter}"
+                                                    ConverterParameter="{StaticResource largeChangeDivisor}"
+                                                >
+                                                    <Binding Path="Maximum" />
+                                                    <Binding Path="Minimum" />
+                                                </MultiBinding>
+                                            </Slider.LargeChange>
+                                        </Slider>
+                                        <Button
+                                            Grid.Column="2"
+                                            Click="ResetValue"
+                                            Padding="3"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            ToolTip="Reset to default"
+                                        >
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Value="True">
+                                                            <DataTrigger.Binding>
+                                                                <MultiBinding Converter="{StaticResource equalityConverter}">
+                                                                    <Binding Path="Value" />
+                                                                    <Binding Path="Default" />
+                                                                </MultiBinding>
+                                                            </DataTrigger.Binding>
+                                                            <Setter Property="Visibility" Value="Hidden" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <Image Source="/images/reset.png" Height="12" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+</UserControl>

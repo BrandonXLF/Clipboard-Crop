@@ -8,19 +8,72 @@ using System.Windows.Media.Imaging;
 
 namespace ClipboardCrop {
     public partial class CropImageView : UserControl, ISetImage, INotifyPropertyChanged {
-        private BitmapSource _image;
+        private BitmapSource _baseImage;
+        private BitmapSource _previewImage;
+
+        private int rotation = 0;
+        private int hFlip = 1;
+        private int vFlip = 1;
+        private float _contrast = 1;
+        private float _brightness = 0;
+        private float _saturation = 1;
+
+        public float Contrast {
+            get => _contrast;
+            set {
+                _contrast = value;
+
+                ApplyTransformations();
+                NotifyPropertyChanged("Contrast");
+            }
+        }
+
+        public float Brightness {
+            get => _brightness;
+            set {
+                _brightness = value;
+
+                ApplyTransformations();
+                NotifyPropertyChanged("Brightness");
+            }
+        }
+
+        public float Saturation {
+            get => _saturation;
+            set {
+                _saturation = value;
+
+                ApplyTransformations();
+                NotifyPropertyChanged("Saturation");
+            }
+        }
+
         public BitmapSource? Image {
-            get => _image;
+            get => _baseImage;
+
             set {
                 if (value == null) {
                     ((ContentControl)Parent).Content = new SelectImageView();
                     return;
                 }
 
-                _image = value;
-                NotifyPropertyChanged("Image");
+                _baseImage = value;
+                _previewImage = value;
+
+                ResetTransformations();
+                NotifyPropertyChanged("PreviewImage");
             }
         }
+
+        public BitmapSource PreviewImage { 
+            get => _previewImage;
+
+            set {
+                _previewImage = value;
+                NotifyPropertyChanged("PreviewImage");
+            }
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public CropImageView(BitmapSource image) {
@@ -135,19 +188,85 @@ namespace ClipboardCrop {
         }
 
         private void RotateLeft_Click(object sender, RoutedEventArgs e) {
-            Image = new TransformedBitmap(Image, new RotateTransform(-90));
+            rotation -= 90;
+            rotation %= 360;
+            
+            ApplyTransformations();
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e) {
-            Image = new TransformedBitmap(Image, new RotateTransform(90));
+            rotation += 90;
+            rotation %= 360;
+
+            ApplyTransformations();
         }
 
         private void FlipHorizontally_Click(object sender, RoutedEventArgs e) {
-            Image = new TransformedBitmap(Image, new ScaleTransform(-1, 1));
+            hFlip *= -1;
+
+            ApplyTransformations();
         }
 
         private void FlipVertically_Click(object sender, RoutedEventArgs e) {
-            Image = new TransformedBitmap(Image, new ScaleTransform(1, -1));
+            vFlip *= -1;
+
+            ApplyTransformations();
+        }
+
+        private void ApplyTransformations() {
+            PreviewImage = Image;
+
+            if (Contrast != 1 || Brightness != 0 || Saturation != 1) {
+                FormatConvertedBitmap converted = new();
+                converted.BeginInit();
+                converted.Source = PreviewImage;
+                converted.DestinationFormat = PixelFormats.Bgra32;
+                converted.EndInit();
+
+                byte[] bytes = new byte[converted.PixelHeight * converted.PixelWidth * 4];
+                converted.CopyPixels(bytes, converted.PixelWidth * 4, 0);
+
+                for (int i = 0; i < bytes.Length; i += 4) {
+                    float grey = (bytes[i] + bytes[i + 1] + bytes[i + 2]) / 3;
+
+                    for (int j = 0; j < 3; j++) {
+                        float value = ((bytes[i + j] - 128) * Contrast + 128 + Brightness) * Saturation + grey * (1 - Saturation);
+
+                        if (value < 0) {
+                            value = 0;
+                        } else if (value > 255) {
+                            value = 255;
+                        }
+
+                        bytes[i + j] = (byte)value;
+                    }
+                }
+
+                PreviewImage = BitmapSource.Create(
+                    converted.PixelWidth,
+                    converted.PixelHeight,
+                    converted.DpiX,
+                    converted.DpiY,
+                    converted.Format,
+                    null,
+                    bytes,
+                    converted.PixelWidth * 4
+                );
+            }
+
+            if (rotation != 0)
+                PreviewImage = new TransformedBitmap(PreviewImage, new RotateTransform(rotation));
+
+            if (hFlip == -1 || vFlip == -1)
+                PreviewImage = new TransformedBitmap(PreviewImage, new ScaleTransform(hFlip, vFlip));
+        }
+
+        private void ResetTransformations() {
+            rotation = 0;
+            hFlip = 1;
+            vFlip = 1;
+            _contrast = 1;
+            _brightness = 0;
         }
     }
 }

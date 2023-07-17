@@ -2,8 +2,8 @@
     x:Class="ClipboardCrop.CropImageView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClipboardCrop"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d" 
@@ -18,7 +18,7 @@
         <Image
             Name="imageElement"
             SizeChanged="Image_SizeChanged"
-            Source="{Binding Image}"
+            Source="{Binding PreviewImage}"
         />
         <Grid
             Name="container" 
@@ -141,6 +141,10 @@
                 <ColumnDefinition />
                 <ColumnDefinition MinWidth="25" />
                 <ColumnDefinition MinWidth="25" />
+                <ColumnDefinition MinWidth="25" />
+                <ColumnDefinition />
+                <ColumnDefinition MinWidth="25" />
+                <ColumnDefinition MinWidth="25" />
             </Grid.ColumnDefinitions>
             <Button
                 Click="LoadClipboard_Click"
@@ -205,8 +209,37 @@
                 <Image Source="/images/flip vertically.png" Height="18" />
             </Button>
             <Grid Grid.Column="8" Width="15" />
-            <Button
+            <local:PopupSlider
                 Grid.Column="9"
+                Value="{Binding Brightness}"
+                Default="0"
+                Minimum="-256"
+                Maximum="256"
+                ToolTip="Adjust brightness"
+            >
+                <Image Source="/images/brightness.png" Height="20" />
+            </local:PopupSlider>
+            <local:PopupSlider
+                Grid.Column="10"
+                Value="{Binding Contrast}"
+                Default="1"
+                Minimum="0"
+                Maximum="2"
+            >
+                <Image Source="/images/contrast.png" Height="20" />
+            </local:PopupSlider>
+            <local:PopupSlider
+                Grid.Column="11"
+                Value="{Binding Saturation}"
+                Default="1"
+                Minimum="0"
+                Maximum="2"
+            >
+                <Image Source="/images/saturation.png" Height="20" />
+            </local:PopupSlider>
+            <Grid Grid.Column="12" Width="15" />
+            <Button
+                Grid.Column="13"
                 Click="SaveClipboard_Click"
                 Padding="5"
                 Background="Transparent"
@@ -216,7 +249,7 @@
                 <Image Source="/images/save clipboard.png" Height="20" />
             </Button>
             <Button
-                Grid.Column="10"
+                Grid.Column="14"
                 Click="SaveFile_Click"
 
                 Padding="5"
