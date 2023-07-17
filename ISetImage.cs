@@ -2,6 +2,6 @@
 
 namespace ClipboardCrop {
     public interface ISetImage {
-        public abstract void SetImage(BitmapSource? image);
+        public BitmapSource? Image { set; }
     }
 }

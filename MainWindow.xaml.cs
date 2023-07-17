@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace ClipboardCrop {
     public partial class MainWindow : Window, ISetImage {
+        public BitmapSource? Image {
+            set => ((ISetImage)main.Content).Image = value;
+        }
+
         public MainWindow() {
             InitializeComponent();
 
@@ -17,10 +21,6 @@ namespace ClipboardCrop {
             }
         }
 
-        public void SetImage(BitmapSource? image) {
-           ((ISetImage)main.Content).SetImage(image);
-        }
-
         private void OnPaste(object sender, ExecutedRoutedEventArgs e) {
             BitmapSource? pastedImage = SaveLoad.LoadClipboard();
 
@@ -29,7 +29,7 @@ namespace ClipboardCrop {
                 if (file != null) pastedImage = SaveLoad.LoadFile(file);
             }
 
-            SetImage(pastedImage);
+            Image = pastedImage;
         }
 
         private void Window_DragOver(object sender, DragEventArgs e) {
@@ -42,7 +42,7 @@ namespace ClipboardCrop {
 
             if (filename == null) return;
 
-            SetImage(SaveLoad.LoadFile(filename));
+            Image = SaveLoad.LoadFile(filename);
         }
     }
 }

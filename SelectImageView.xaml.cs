@@ -1,27 +1,30 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace ClipboardCrop {
-    public partial class SelectImageView : UserControl, ISetImage  {
+    public partial class SelectImageView : UserControl, ISetImage {
+        public BitmapSource? Image {
+            set {
+                if (value == null)
+                    return;
+
+                ((ContentControl)Parent).Content = new CropImageView(value);
+            }
+        }
+
         public SelectImageView() {
             InitializeComponent();
         }
 
-        public void SetImage(BitmapSource? image) {
-            if (image != null) {
-                ((ContentControl)Parent).Content = new CropImageView(image);
-            }
-        }
-
         private void LoadClipboard_Click(object sender, RoutedEventArgs e) {
-            SetImage(SaveLoad.LoadClipboard());
+            Image = SaveLoad.LoadClipboard();
         }
 
         private void LoadFile_Click(object sender, RoutedEventArgs e) {
             try {
-                SetImage(SaveLoad.LoadFile());
+                Image = SaveLoad.LoadFile();
             } catch (OperationCanceledException) { }
         }
     }

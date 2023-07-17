@@ -9,26 +9,27 @@ using System.Windows.Media.Imaging;
 namespace ClipboardCrop {
     public partial class CropImageView : UserControl, ISetImage, INotifyPropertyChanged {
         private BitmapSource _image;
-        public BitmapSource Image { get => _image; }
+        public BitmapSource? Image {
+            get => _image;
+            set {
+                if (value == null) {
+                    ((ContentControl)Parent).Content = new SelectImageView();
+                    return;
+                }
+
+                _image = value;
+                NotifyPropertyChanged("Image");
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public CropImageView(BitmapSource image) {
             InitializeComponent();
-            SetImage(image);
+            Image = image;
         }
 
         private void NotifyPropertyChanged(string prop) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        public void SetImage(BitmapSource? image) {
-            if (image == null) {
-                ((ContentControl)Parent).Content = new SelectImageView();
-                return;
-            }
-
-            _image = image;
-            NotifyPropertyChanged("Image");
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e) {
@@ -116,12 +117,12 @@ namespace ClipboardCrop {
         }
 
         private void LoadClipboard_Click(object sender, RoutedEventArgs e) {
-            SetImage(SaveLoad.LoadClipboard());
+            Image = SaveLoad.LoadClipboard();
         }
 
         private void LoadFile_Click(object sender, RoutedEventArgs e) {
             try {
-                SetImage(SaveLoad.LoadFile());
+                Image = SaveLoad.LoadFile();
             } catch (OperationCanceledException) {}
         }
 
@@ -134,19 +135,19 @@ namespace ClipboardCrop {
         }
 
         private void RotateLeft_Click(object sender, RoutedEventArgs e) {
-            SetImage(new TransformedBitmap(Image, new RotateTransform(-90)));
+            Image = new TransformedBitmap(Image, new RotateTransform(-90));
         }
 
         private void RotateRight_Click(object sender, RoutedEventArgs e) {
-            SetImage(new TransformedBitmap(Image, new RotateTransform(90)));
+            Image = new TransformedBitmap(Image, new RotateTransform(90));
         }
 
         private void FlipHorizontally_Click(object sender, RoutedEventArgs e) {
-            SetImage(new TransformedBitmap(Image, new ScaleTransform(-1, 1)));
+            Image = new TransformedBitmap(Image, new ScaleTransform(-1, 1));
         }
 
         private void FlipVertically_Click(object sender, RoutedEventArgs e) {
-            SetImage(new TransformedBitmap(Image, new ScaleTransform(1, -1)));
+            Image = new TransformedBitmap(Image, new ScaleTransform(1, -1));
         }
     }
 }
