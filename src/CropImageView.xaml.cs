@@ -180,11 +180,11 @@ namespace ClipboardCrop {
         }
 
         private void SaveClipboard_Click(object sender, RoutedEventArgs e) {
-            SaveLoad.SaveClipboard(new CroppedBitmap(Image, GetCropSize()));
+            SaveLoad.SaveClipboard(new CroppedBitmap(PreviewImage, GetCropSize()));
         }
 
         private void SaveFile_Click(object sender, RoutedEventArgs e) {
-            SaveLoad.SaveFile(new CroppedBitmap(Image, GetCropSize()));
+            SaveLoad.SaveFile(new CroppedBitmap(PreviewImage, GetCropSize()));
         }
 
         private void RotateLeft_Click(object sender, RoutedEventArgs e) {
