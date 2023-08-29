@@ -215,7 +215,7 @@
                 Default="0"
                 Minimum="-256"
                 Maximum="256"
-                ToolTip="Adjust brightness"
+                ToolTip="Adjust Brightness"
             >
                 <Image Source="/images/brightness.png" Height="20" />
             </local:PopupSlider>
@@ -225,6 +225,7 @@
                 Default="1"
                 Minimum="0"
                 Maximum="2"
+                ToolTip="Adjust Contrast"
             >
                 <Image Source="/images/contrast.png" Height="20" />
             </local:PopupSlider>
@@ -234,6 +235,7 @@
                 Default="1"
                 Minimum="0"
                 Maximum="2"
+                ToolTip="Adjust Saturation"
             >
                 <Image Source="/images/saturation.png" Height="20" />
             </local:PopupSlider>
@@ -244,7 +246,7 @@
                 Padding="5"
                 Background="Transparent"
                 BorderThickness="0"
-                ToolTip="Save To Clipboard"
+                ToolTip="Save to Clipboard"
             >
                 <Image Source="/images/save clipboard.png" Height="20" />
             </Button>
@@ -255,7 +257,7 @@
                 Padding="5"
                 Background="Transparent"
                 BorderThickness="0"
-                ToolTip="Save To File"
+                ToolTip="Save to File"
             >
                 <Image Source="/images/save file.png" Height="20" />
             </Button>
