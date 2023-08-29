@@ -256,8 +256,9 @@ namespace ClipboardCrop {
             rotation = 0;
             hFlip = 1;
             vFlip = 1;
-            _contrast = 1;
-            _brightness = 0;
+            Contrast = 1;
+            Brightness = 0;
+            Saturation = 1;
         }
     }
 }
