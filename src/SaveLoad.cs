@@ -6,8 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace ClipboardCrop
-{
+namespace ClipboardCrop {
     internal class SaveLoad {
         private static readonly Dictionary<string, Type> encoders = new() {
             { ".png", typeof(PngBitmapEncoder) },
