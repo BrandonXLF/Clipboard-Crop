@@ -2,6 +2,8 @@
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Linq;
+using ClipboardCrop.Properties;
+using System.Configuration;
 
 namespace ClipboardCrop {
     public partial class MainWindow : Window, ISetImage {
@@ -13,6 +15,10 @@ namespace ClipboardCrop {
 
         public MainWindow() {
             InitializeComponent();
+
+            if (!ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).HasFile)
+                Settings.Default.Upgrade();            
+
             StateManager.Connect(this);
 
             BitmapSource? initialImage = SaveLoad.LoadClipboard();
