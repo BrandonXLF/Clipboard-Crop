@@ -112,6 +112,7 @@ namespace ClipboardCrop {
             }
 
             win.LocationChanged += new EventHandler((_, _) => Save(win));
+            win.SizeChanged += new SizeChangedEventHandler((_, _) => Save(win));
         }
     }
 }
