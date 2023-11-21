@@ -9,9 +9,9 @@
         <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
         <RootNamespace>$(MSBuildProjectName.Replace(" ", ""))</RootNamespace>
         <ApplicationIcon>images\icon.ico</ApplicationIcon>
-        <Version>1.0.1</Version>
+        <Version>1.2.0</Version>
         <Authors>Brandon Fowler</Authors>
-        <Copyright>Copyright 2022 Brandon Fowler</Copyright>
+        <Copyright>Copyright 2023 Brandon Fowler</Copyright>
         <NoWin32Manifest>true</NoWin32Manifest>
         <BaseOutputPath>bin\</BaseOutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
