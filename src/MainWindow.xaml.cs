@@ -5,12 +5,15 @@ using System.Linq;
 
 namespace ClipboardCrop {
     public partial class MainWindow : Window, ISetImage {
+        readonly WindowStateManager StateManager = new(1200, 800);
+
         public BitmapSource? Image {
             set => ((ISetImage)main.Content).Image = value;
         }
 
         public MainWindow() {
             InitializeComponent();
+            StateManager.Connect(this);
 
             BitmapSource? initialImage = SaveLoad.LoadClipboard();
 

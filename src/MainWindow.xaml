@@ -6,8 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Clipboard Crop"
-    Height="800"
-    Width="1200"
     MinWidth="250"
     MinHeight="200"
     Drop="Window_Drop"
